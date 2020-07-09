@@ -27,7 +27,7 @@
  */
 function degruchy_csp()
 {
-	header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https://cdn.shortpixel.ai; upgrade-insecure-requests; block-all-mixed-content; base-uri 'self'; report-uri https://degruchy.report-uri.com/r/d/csp/enforce");
+	header("Content-Security-Policy: default-src 'self' www.degruchy.org; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https://cdn.shortpixel.ai; upgrade-insecure-requests; block-all-mixed-content; base-uri 'self'; report-uri https://degruchy.report-uri.com/r/d/csp/enforce");
 	return true;
 }
 
@@ -39,25 +39,20 @@ add_filter( 'send_headers', 'degruchy_csp' );
  * so on sites with large postmeta tables it is super slow
  * and is rarely useful anymore on any site
  */
-function s9_remove_post_custom_fields_metabox() {
-     foreach ( get_post_types( '', 'names' ) as $post_type ) {
+function s9_remove_post_custom_fields_metabox()
+{
+    foreach ( get_post_types( '', 'names' ) as $post_type )
+	{
          remove_meta_box( 'postcustom' , $post_type , 'normal' );   
-     }
+    }
 }
 add_action( 'admin_menu' , 's9_remove_post_custom_fields_metabox' ); 
-
-//Remove jQuery migrate
-function smartwp_remove_jquery_migrate( $scripts ) {
-	if ( !is_admin() && !empty( $scripts->registered[ 'jquery' ] ) ) {
- 		$scripts->registered[ 'jquery' ]->deps = array_diff( $scripts->registered[ 'jquery' ]->deps, [ 'jquery-migrate' ] );
-	}
-}
-add_action('wp_default_scripts', 'smartwp_remove_jquery_migrate');
 
 /**
  * Display Old Post Notification on Content
  */
-function display_old_post_notification_on_content( $content ) {
+function display_old_post_notification_on_content( $content )
+{
 	if( !is_singular( 'post' ) )
 		return $content;
 	
@@ -92,5 +87,30 @@ function display_old_post_notification_on_content( $content ) {
 }
 
 add_filter( 'the_content', 'display_old_post_notification_on_content', 99 );
+
+
+/* Remove jQuery -- Might not be smart on *all* sites.
+ * add_filter( 'wp_default_scripts', 'remove_jquery' );
+ * 
+ * function remove_jquery( &$scripts )
+ * {
+ * 	if( !is_admin() )
+ * 	{
+ *         $scripts->remove( 'jquery' );
+ *     }
+ * } */
+
+function degruchy_mime_types( $mimes )
+{
+ 	// $mimes[ 'svg'  ] = 'image/svg+xml';
+	$mimes[ 'svg'  ] = 'image/svg';
+	$mimes[ 'webp' ] = 'image/webp';
+	$mimes[ 'webm' ] = 'video/webm';
+	$mimes[ 'weba' ] = 'audio/weba';
+
+	return $mimes;
+}
+
+add_filter( 'upload_mimes', 'degruchy_mime_types', 1, 99 );
 
 ?>
