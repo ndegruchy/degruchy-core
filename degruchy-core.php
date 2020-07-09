@@ -24,6 +24,8 @@
 
 /**
  * Add CSPs to header
+ *
+ * @return bool TRUE This always fires
  */
 function degruchy_csp() {
 	// Settings matrix
@@ -83,10 +85,14 @@ function degruchy_csp() {
 add_filter( 'send_headers', 'degruchy_csp' );
 
 /**
+ * degruchy_custom_fields_metabox
+ *
  * Remove Ancient Custom Fields metabox from post editor
  * because it uses a very slow query meta_key sort query
  * so on sites with large postmeta tables it is super slow
  * and is rarely useful anymore on any site
+ *
+ * @return TRUE This always happens
  */
 function degruchy_custom_fields_metabox() {
 	foreach ( get_post_types( '', 'names' ) as $post_type ) {
@@ -100,9 +106,12 @@ add_action( 'admin_menu', 'degruchy_custom_fields_metabox' );
 
 /**
  * Display Old Post Notification on Content
+ *
+ * @param string $content The post/page content to maybe modify.
+ *
+ * @return string $content The maybe modified content
  */
-function degruchy_old_post_notification_on_content( $content ) {
-	// TODO: Factor out banner into template?
+function degruchy_maybe_add_banner( $content ) {
 	if ( ! is_singular( 'post' ) ) {
 		return $content;
 	}
@@ -131,8 +140,15 @@ function degruchy_old_post_notification_on_content( $content ) {
 	}
 }
 
-add_filter( 'the_content', 'degruchy_old_post_notification_on_content', 99 );
+add_filter( 'the_content', 'degruchy_maybe_add_banner', 99 );
 
+/**
+ * degruchy_mime_types
+ *
+ * @param array $mimes A system supplied list of safe mimetypes.
+ *
+ * @return array $mimes An appended list of safe mimetypes for uploads
+ */
 function degruchy_mime_types( $mimes ) {
 	// $mimes[ 'svg'  ] = 'image/svg+xml'; // doesn't seem to work...
 	$mimes[ 'svg' ]  = 'image/svg';
@@ -145,4 +161,3 @@ function degruchy_mime_types( $mimes ) {
 
 add_filter( 'upload_mimes', 'degruchy_mime_types', 1, 99 );
 
-?>
