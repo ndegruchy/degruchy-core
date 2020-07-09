@@ -22,6 +22,7 @@
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+
 /**
  * Add CSPs to header
  *
@@ -121,7 +122,6 @@ function degruchy_maybe_add_banner( $content ) {
 	$oneyr  = 60 * 60 * 24 * 365;
 	$cats   = get_categories();
 	$show   = 0;
-	$banner = '<section id="old"><p><em><strong>Please Note:</strong> This post is a year old or older. That means the content may have changed, <a href="https://degruchy.org/notes/evolving-thoughts/">be out of date with current thinking or just plain wrong</a>. If you have any questions, comments or issues regarding this content, please <a href="mailto:nathan@degruchy.org?subject=Issue%20With%20Your%20Site%3A&body=Hello%2C%0D%0A%0D%0AI%20am%20having%20issues%20with%20this%20page%3A%0D%0A%0D%0APlease%20help.%0D%0A%0D%0AThanks!">send me an email</a> with the link and your message.</em></p><p><em>Thank you.</em></p><p><em>&mdash; Nathan</em></p></section>';
 
 	foreach ( $cats as $category ) { // Loop through the assigned categories
 		if ( $category == 'garrett-quotes' ) { // If we are a garrett quote
@@ -132,6 +132,27 @@ function degruchy_maybe_add_banner( $content ) {
 	}
 
 	if ( ( ( $today - $postd ) >= $oneyr ) && $show == 1 ) { // If we're a year or more old
+		// Add parsedown.
+		if( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
+			require_once __DIR__ . "/vendor/parsedown/Parsedown.php";
+			$Parsedown = new Parsedown;
+
+			// Set some options
+			$Parsedown->setSafeMode(true);
+
+			$banner_file = __DIR__ . "/templates/banner.md";
+			if( file_exists( $banner_file ) ) {
+				$banner = file_get_contents( $banner_file );
+			} else {
+				$banner = '';
+			}
+
+			$banner = $Parsedown->text( $banner );
+			$banner = "<section id=\"old\">" . $banner . "</section>";
+		} else {
+			$banner = '';
+		}
+
 		$content = $banner . $content;
 
 		return $content; // Show the banner
