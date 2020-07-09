@@ -43,8 +43,9 @@ function s9_remove_post_custom_fields_metabox()
 {
     foreach ( get_post_types( '', 'names' ) as $post_type )
 	{
-         remove_meta_box( 'postcustom' , $post_type , 'normal' );   
+         remove_meta_box( 'postcustom' , $post_type , 'normal' );
     }
+	return true;
 }
 add_action( 'admin_menu' , 's9_remove_post_custom_fields_metabox' ); 
 
@@ -88,21 +89,9 @@ function display_old_post_notification_on_content( $content )
 
 add_filter( 'the_content', 'display_old_post_notification_on_content', 99 );
 
-
-/* Remove jQuery -- Might not be smart on *all* sites.
- * add_filter( 'wp_default_scripts', 'remove_jquery' );
- * 
- * function remove_jquery( &$scripts )
- * {
- * 	if( !is_admin() )
- * 	{
- *         $scripts->remove( 'jquery' );
- *     }
- * } */
-
 function degruchy_mime_types( $mimes )
 {
- 	// $mimes[ 'svg'  ] = 'image/svg+xml';
+ 	// $mimes[ 'svg'  ] = 'image/svg+xml'; // doesn't seem to work...
 	$mimes[ 'svg'  ] = 'image/svg';
 	$mimes[ 'webp' ] = 'image/webp';
 	$mimes[ 'webm' ] = 'video/webm';
