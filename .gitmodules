@@ -1,3 +1,0 @@
-[submodule "vendor/parsedown"]
-	path = vendor/parsedown
-	url = https://github.com/erusev/parsedown
