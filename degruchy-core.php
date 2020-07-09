@@ -126,6 +126,8 @@ function degruchy_maybe_add_banner( $content ) {
 	foreach ( $cats as $category ) { // Loop through the assigned categories
 		if ( $category == 'garrett-quotes' ) { // If we are a garrett quote
 			$show = 0; // hide the bar
+		} else if ( $category == 'website' ) { // portfolio posts also are disqualified
+			$show = 0;
 		} else {
 			$show = 1;
 		}
@@ -144,19 +146,20 @@ function degruchy_maybe_add_banner( $content ) {
 			if( file_exists( $banner_file ) ) {
 				$banner = file_get_contents( $banner_file );
 			} else {
-				$banner = '';
+				$banner = ''; // banner template is missing, abort!
 			}
 
 			$banner = $Parsedown->text( $banner );
 			$banner = "<section id=\"old\">" . $banner . "</section>";
 		} else {
-			$banner = '';
+			$banner = ''; // parsedown is missing! abort!
 		}
 
 		$content = $banner . $content;
 
 		return $content; // Show the banner
 	} else {
+		// We're not showing the banner, now
 		return $content;
 	}
 }
