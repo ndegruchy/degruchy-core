@@ -2,7 +2,8 @@
 
 *Thank you.*
 
-*&mdash; Nathan*
+*-- [Nathan][3]*
 
 [1]: https://degruchy.org/notes/evolving-thoughts/
 [2]: mailto:nathan@degruchy.org?subject=Issue%20With%20Your%20Site%3A&body=Hello%2C%0D%0A%0D%0AI%20am%20having%20issues%20with%20this%20page%3A%0D%0A%0D%0APlease%20help.%0D%0A%0D%0AThanks!
+[3]: https://degruchy.org/about-me/
