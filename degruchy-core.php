@@ -188,9 +188,19 @@ add_filter( 'upload_mimes', 'degruchy_mime_types', 1, 99 );
  * @return bool TRUE Always returns true
  */
 function degruchy_css_tweaks() {
-	wp_enqueue_script(
+	if( !file_exists( __DIR__ . "/styles/tweaks.css" ) ) {
+		// Abort if we don't find a tweaks CSS file
+		return FALSE;
+	}
+
+	wp_enqueue_style(
 			'degruchy-core-tweaks',
-			__DIR__ . '/styles/tweaks.css'
+			plugins_url( "/styles/tweaks.css", __FILE__ ),
+			array(),
+			NULL,
+			"all"
 	);
+
+	return TRUE;
 }
-add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 10 );
+add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 99 );
