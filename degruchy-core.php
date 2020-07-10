@@ -244,4 +244,38 @@ add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 99 );
 /**
  * Re-enable link manager
  */
+function degruchy_core_sc_blogroll() {
+	$_bookmarks_cache = wp_cache_get(
+		"degruchy-core-bookmarks-rendered",
+		"degruchy-core"
+	);
+
+	if ( FALSE == $_bookmarks_cache ) {
+		$bookmarks = get_bookmarks( array(
+				'orderby' => 'name',
+				'order' => 'ASC'
+			)
+		);
+
+		$bookmarks_rendered = "";
+
+		foreach( $bookmarks as $bookmark ) {
+			$bookmarks_rendered = "<li>";
+			$bookmarks_rendered .= "<a href=\"$bookmark->link_url\" rel=\"$bookmark->term_relationships\">$bookmark->link_title</a>";
+			$bookmarks_rendered = $bookmarks_rendered . "</li>";
+		}
+
+		wp_cache_set(
+			"degruchy-core-bookmarks-rendered",
+			$bookmarks_rendered,
+			"degruchy-core",
+			3600000
+		);
+
+		return "<ul>" . $bookmarks_rendered . "</ul>";
+	} else {
+		return "<ul>" . $_bookmarks_cache . "</ul>";
+	}
+}
+add_shortcode( 'blogroll', 'degruchy_core_sc_blogroll' );
 add_filter( 'pre_option_link_manager_enabled', '__return_true' );
