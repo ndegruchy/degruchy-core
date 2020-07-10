@@ -29,56 +29,77 @@
  * @return bool TRUE This always fires
  */
 function degruchy_csp() {
-	// Settings matrix
-	$csp_options = array(
-		"default-src" => array(
-			"'self'",
-			"https://www.degruchy.org",
-		),
-		"base-uri"    => array(
-			"'self'",
-			"https://www.degruchy.org",
-		),
-		"script-src"  => array(
-			"'self'",
-			"'unsafe-inline'",
-		),
-		"style-src"   => array(
-			"'self'",
-			"'unsafe-inline'",
-		),
-		"font-src"    => array(
-			"'self'",
-			"data:",
-		),
-		"img-src"     => array(
-			"'self'",
-			"data:",
-			"https://cdn.shortpixel.ai",
-		),
-		"report-uri"  => "https://degruchy.report-uri.com/r/d/csp/enforce",
-	);
+	$toggle = TRUE; // Set me to false to turn this feature off
 
-	$csp_string = ""; // Empty by default
-
-	foreach ( $csp_options as $rule => $setting ) {
-		// For each item in the top-level array
-		if ( is_array( $setting ) ) {
-			// If we find the value is another array, loop in
-			$csp_string .= $rule; // First part
-			foreach ( $setting as $item ) {
-				$csp_string .= " " . $item; // Append setting
-			}
-		} else {
-			// If it's just a simple k=>v, then add it as per normal.
-			$csp_string .= $rule . " " . $setting;
-		}
-		$csp_string .= "; "; // separator
+	if( !$toggle ) {
+		return FALSE;
 	}
 
-	$csp_string .= " upgrade-insecure-requests; block-all-mixed-content;"; // non-value rules
+	$_csp_cache = wp_cache_get( "degruchy-core-csp", "degruchy-core" );
 
-	header( "Content-Security-Policy: $csp_string" ); // send!
+	if( FALSE == $_csp_cache ) {
+		// Settings matrix
+		$csp_options = array(
+			"default-src" => array(
+				"'self'",
+				"https://www.degruchy.org",
+			),
+			"base-uri"    => array(
+				"'self'",
+				"https://www.degruchy.org",
+			),
+			"script-src"  => array(
+				"'self'",
+				"'unsafe-inline'",
+			),
+			"style-src"   => array(
+				"'self'",
+				"'unsafe-inline'",
+			),
+			"font-src"    => array(
+				"'self'",
+				"data:",
+			),
+			"img-src"     => array(
+				"'self'",
+				"data:",
+				"https://cdn.shortpixel.ai",
+			),
+			"report-uri"  => "https://degruchy.report-uri.com/r/d/csp/enforce",
+		);
+
+		$csp_string = "Content-Security-Policy: "; // Empty by default
+
+		foreach ( $csp_options as $rule => $setting ) {
+			// For each item in the top-level array
+			if ( is_array( $setting ) ) {
+				// If we find the value is another array, loop in
+				$csp_string .= $rule; // First part
+				foreach ( $setting as $item ) {
+					$csp_string .= " " . $item; // Append setting
+				}
+			} else {
+				// If it's just a simple k=>v, then add it as per normal.
+				$csp_string .= $rule . " " . $setting;
+			}
+			$csp_string .= "; "; // separator
+		}
+
+		$csp_string .= "upgrade-insecure-requests; block-all-mixed-content;"; // non-value rules
+		$csp_string = trim( $csp_string );
+
+		// Caching
+		wp_cache_set(
+			"degruchy-core-csp",
+			$csp_string,
+			"degruchy-core",
+			3600000
+		);
+
+		header( $csp_string );
+	} else {
+		header( $_csp_cache ); // send!
+	}
 
 	return TRUE;
 }
@@ -117,49 +138,57 @@ function degruchy_maybe_add_banner( $content ) {
 		return $content;
 	}
 
-	$postd  = get_the_date( 'U' );
-	$today  = date( 'U' );
-	$oneyr  = 60 * 60 * 24 * 365;
-	$cats   = get_categories();
-	$show   = 0;
+	$_banner_cache = wp_cache_get( "degruchy-core-old-banner", "degruchy-core" );
 
-	foreach ( $cats as $category ) { // Loop through the assigned categories
-		if ( $category == 'garrett-quotes' ) { // If we are a garrett quote
-			$show = 0; // hide the bar
-		} else {
-			$show = 1;
-		}
-	}
+	if( FALSE == $_banner_cache ) {
+		$postd  = get_the_date( 'U' );
+		$today  = date( 'U' );
+		$oneyr  = 60 * 60 * 24 * 365;
+		$cats   = get_categories();
+		$show   = 0;
 
-	if ( ( ( $today - $postd ) >= $oneyr ) && $show == 1 ) { // If we're a year or more old
-		// Add parsedown.
-		if( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
-			require_once __DIR__ . "/vendor/parsedown/Parsedown.php";
-			$Parsedown = new Parsedown;
-
-			// Set some options
-			$Parsedown->setSafeMode(true);
-
-			$banner_file = __DIR__ . "/templates/banner.md";
-			if( file_exists( $banner_file ) ) {
-				$banner = file_get_contents( $banner_file );
+		foreach ( $cats as $category ) { // Loop through the assigned categories
+			if ( $category == 'garrett-quotes' ) { // If we are a garrett quote
+				$show = 0; // hide the bar
+				break;
 			} else {
-				$banner = ''; // banner template is missing, abort!
+				$show = 1;
+			}
+		}
+
+		if ( ( ( $today - $postd ) >= $oneyr ) && $show == 1 ) { // If we're a year or more old
+			// Add parsedown.
+			if( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
+				require_once __DIR__ . "/vendor/parsedown/Parsedown.php";
+				$Parsedown = new Parsedown;
+
+				// Set some options
+				$Parsedown->setSafeMode(true);
+
+				$banner_file = __DIR__ . "/templates/banner.md";
+				if( file_exists( $banner_file ) ) {
+					$banner = file_get_contents( $banner_file );
+				} else {
+					$banner = ''; // banner template is missing, abort!
+				}
+
+				$banner = $Parsedown->text( $banner );
+				$banner = "<section id=\"old\">" . $banner . "</section>";
+			} else {
+				$banner = ''; // parsedown is missing! abort!
 			}
 
-			$banner = $Parsedown->text( $banner );
-			$banner = "<section id=\"old\">" . $banner . "</section>";
+			$content = $banner . $content;
+
+			return $content; // Show the banner
 		} else {
-			$banner = ''; // parsedown is missing! abort!
+			// We're not showing the banner, now
+			return $content;
 		}
-
-		$content = $banner . $content;
-
-		return $content; // Show the banner
 	} else {
-		// We're not showing the banner, now
-		return $content;
+		return $_banner_cache . $content;
 	}
+
 }
 
 add_filter( 'the_content', 'degruchy_maybe_add_banner', 99 );
