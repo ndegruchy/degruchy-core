@@ -126,8 +126,6 @@ function degruchy_maybe_add_banner( $content ) {
 	foreach ( $cats as $category ) { // Loop through the assigned categories
 		if ( $category == 'garrett-quotes' ) { // If we are a garrett quote
 			$show = 0; // hide the bar
-		} else if ( $category == 'website' ) { // portfolio posts also are disqualified
-			$show = 0;
 		} else {
 			$show = 1;
 		}
@@ -174,7 +172,6 @@ add_filter( 'the_content', 'degruchy_maybe_add_banner', 99 );
  * @return array $mimes An appended list of safe mimetypes for uploads
  */
 function degruchy_mime_types( $mimes ) {
-	// $mimes[ 'svg'  ] = 'image/svg+xml'; // doesn't seem to work...
 	$mimes[ 'svg' ]  = 'image/svg';
 	$mimes[ 'webp' ] = 'image/webp';
 	$mimes[ 'webm' ] = 'video/webm';
@@ -185,3 +182,15 @@ function degruchy_mime_types( $mimes ) {
 
 add_filter( 'upload_mimes', 'degruchy_mime_types', 1, 99 );
 
+/**
+ * Add tweaks CSS
+ *
+ * @return bool TRUE Always returns true
+ */
+function degruchy_css_tweaks() {
+	wp_enqueue_script(
+			'degruchy-core-tweaks',
+			__DIR__ . '/styles/tweaks.css'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 10 );
