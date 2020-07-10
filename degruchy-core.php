@@ -155,25 +155,42 @@ function degruchy_maybe_add_banner( $content ) {
 	}
 
 	if ( ( ( $today - $postd ) >= $oneyr ) && $show == 1 ) { // If we're a year or more old
-		// Add parsedown.
-		if( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
-			require_once __DIR__ . "/vendor/parsedown/Parsedown.php";
-			$Parsedown = new Parsedown;
 
-			// Set some options
-			$Parsedown->setSafeMode(true);
+		$_banner_cache = wp_cache_get(
+			"degruchy-core-old-banner",
+			"degruchy-core"
+		);
 
-			$banner_file = __DIR__ . "/templates/banner.md";
-			if( file_exists( $banner_file ) ) {
-				$banner = file_get_contents( $banner_file );
+		if( FALSE == $_banner_cache ) {
+			// Add parsedown.
+			if( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
+				require_once __DIR__ . "/vendor/parsedown/Parsedown.php";
+				$Parsedown = new Parsedown;
+
+				// Set some options
+				$Parsedown->setSafeMode(true);
+
+				$banner_file = __DIR__ . "/templates/banner.md";
+				if( file_exists( $banner_file ) ) {
+					$banner = file_get_contents( $banner_file );
+				} else {
+					$banner = ''; // banner template is missing, abort!
+				}
+
+				$banner = $Parsedown->text( $banner );
+				$banner = "<section id=\"old\">" . $banner . "</section>";
+
+				wp_cache_set(
+					"degruchy-core-old-banner",
+					$banner,
+					"degruchy-core",
+					3600000
+				);
 			} else {
-				$banner = ''; // banner template is missing, abort!
+				$banner = ''; // parsedown is missing! abort!
 			}
-
-			$banner = $Parsedown->text( $banner );
-			$banner = "<section id=\"old\">" . $banner . "</section>";
 		} else {
-			$banner = ''; // parsedown is missing! abort!
+			$banner = $_banner_cache;
 		}
 
 		$content = $banner . $content;
