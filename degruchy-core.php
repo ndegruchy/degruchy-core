@@ -138,55 +138,50 @@ function degruchy_maybe_add_banner( $content ) {
 		return $content;
 	}
 
-	$_banner_cache = wp_cache_get( "degruchy-core-old-banner", "degruchy-core" );
+	// TODO: See if you can cache the generated banner
+	$postd  = get_the_date( 'U' );
+	$today  = date( 'U' );
+	$oneyr  = 60 * 60 * 24 * 365;
+	$cats   = get_categories();
+	$show   = 0;
 
-	if( FALSE == $_banner_cache ) {
-		$postd  = get_the_date( 'U' );
-		$today  = date( 'U' );
-		$oneyr  = 60 * 60 * 24 * 365;
-		$cats   = get_categories();
-		$show   = 0;
-
-		foreach ( $cats as $category ) { // Loop through the assigned categories
-			if ( $category == 'garrett-quotes' ) { // If we are a garrett quote
-				$show = 0; // hide the bar
-				break;
-			} else {
-				$show = 1;
-			}
-		}
-
-		if ( ( ( $today - $postd ) >= $oneyr ) && $show == 1 ) { // If we're a year or more old
-			// Add parsedown.
-			if( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
-				require_once __DIR__ . "/vendor/parsedown/Parsedown.php";
-				$Parsedown = new Parsedown;
-
-				// Set some options
-				$Parsedown->setSafeMode(true);
-
-				$banner_file = __DIR__ . "/templates/banner.md";
-				if( file_exists( $banner_file ) ) {
-					$banner = file_get_contents( $banner_file );
-				} else {
-					$banner = ''; // banner template is missing, abort!
-				}
-
-				$banner = $Parsedown->text( $banner );
-				$banner = "<section id=\"old\">" . $banner . "</section>";
-			} else {
-				$banner = ''; // parsedown is missing! abort!
-			}
-
-			$content = $banner . $content;
-
-			return $content; // Show the banner
+	foreach ( $cats as $category ) { // Loop through the assigned categories
+		if ( $category == 'garrett-quotes' ) { // If we are a garrett quote
+			$show = 0; // hide the bar
+			break;
 		} else {
-			// We're not showing the banner, now
-			return $content;
+			$show = 1;
 		}
+	}
+
+	if ( ( ( $today - $postd ) >= $oneyr ) && $show == 1 ) { // If we're a year or more old
+		// Add parsedown.
+		if( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
+			require_once __DIR__ . "/vendor/parsedown/Parsedown.php";
+			$Parsedown = new Parsedown;
+
+			// Set some options
+			$Parsedown->setSafeMode(true);
+
+			$banner_file = __DIR__ . "/templates/banner.md";
+			if( file_exists( $banner_file ) ) {
+				$banner = file_get_contents( $banner_file );
+			} else {
+				$banner = ''; // banner template is missing, abort!
+			}
+
+			$banner = $Parsedown->text( $banner );
+			$banner = "<section id=\"old\">" . $banner . "</section>";
+		} else {
+			$banner = ''; // parsedown is missing! abort!
+		}
+
+		$content = $banner . $content;
+
+		return $content; // Show the banner
 	} else {
-		return $_banner_cache . $content;
+		// We're not showing the banner, now
+		return $content;
 	}
 
 }
