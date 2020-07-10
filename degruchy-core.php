@@ -240,3 +240,8 @@ function degruchy_css_tweaks() {
 }
 
 add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 99 );
+
+/**
+ * Re-enable link manager
+ */
+add_filter( 'pre_option_link_manager_enabled', '__return_true' );
