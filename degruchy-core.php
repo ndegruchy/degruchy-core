@@ -37,7 +37,7 @@ function degruchy_csp() {
 
 	$_csp_cache = wp_cache_get( "degruchy-core-csp", "degruchy-core" );
 
-	if( FALSE == $_csp_cache ) {
+	if( FALSE == $_csp_cache ) { // CSP Cache is empty, generate it again
 		// Settings matrix
 		$csp_options = array(
 			"default-src" => array(
@@ -162,6 +162,7 @@ function degruchy_maybe_add_banner( $content ) {
 		);
 
 		if( FALSE == $_banner_cache ) {
+			// If the banner cache is empty, generate it
 			// Add parsedown.
 			if( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
 				require_once __DIR__ . "/vendor/parsedown/Parsedown.php";
@@ -180,6 +181,7 @@ function degruchy_maybe_add_banner( $content ) {
 				$banner = $Parsedown->text( $banner );
 				$banner = "<section id=\"old\">" . $banner . "</section>";
 
+				// Cache the result for an hour
 				wp_cache_set(
 					"degruchy-core-old-banner",
 					$banner,
