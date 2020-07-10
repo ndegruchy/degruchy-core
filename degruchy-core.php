@@ -31,13 +31,13 @@
 function degruchy_csp() {
 	$toggle = TRUE; // Set me to false to turn this feature off
 
-	if( !$toggle ) {
+	if ( ! $toggle ) {
 		return FALSE;
 	}
 
 	$_csp_cache = wp_cache_get( "degruchy-core-csp", "degruchy-core" );
 
-	if( FALSE == $_csp_cache ) { // CSP Cache is empty, generate it again
+	if ( FALSE == $_csp_cache ) { // CSP Cache is empty, generate it again
 		// Settings matrix
 		$csp_options = array(
 			"default-src" => array(
@@ -138,12 +138,11 @@ function degruchy_maybe_add_banner( $content ) {
 		return $content;
 	}
 
-	// TODO: See if you can cache the generated banner
-	$postd  = get_the_date( 'U' );
-	$today  = date( 'U' );
-	$oneyr  = 60 * 60 * 24 * 365;
-	$cats   = get_categories();
-	$show   = 0;
+	$postd = get_the_date( 'U' );
+	$today = date( 'U' );
+	$oneyr = 60 * 60 * 24 * 365;
+	$cats  = get_categories();
+	$show  = 0;
 
 	foreach ( $cats as $category ) { // Loop through the assigned categories
 		if ( $category == 'garrett-quotes' ) { // If we are a garrett quote
@@ -161,18 +160,18 @@ function degruchy_maybe_add_banner( $content ) {
 			"degruchy-core"
 		);
 
-		if( FALSE == $_banner_cache ) {
+		if ( FALSE == $_banner_cache ) {
 			// If the banner cache is empty, generate it
 			// Add parsedown.
-			if( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
+			if ( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
 				require_once __DIR__ . "/vendor/parsedown/Parsedown.php";
 				$Parsedown = new Parsedown;
 
 				// Set some options
-				$Parsedown->setSafeMode(true);
+				$Parsedown->setSafeMode( TRUE );
 
 				$banner_file = __DIR__ . "/templates/banner.md";
-				if( file_exists( $banner_file ) ) {
+				if ( file_exists( $banner_file ) ) {
 					$banner = file_get_contents( $banner_file );
 				} else {
 					$banner = ''; // banner template is missing, abort!
@@ -231,19 +230,20 @@ add_filter( 'upload_mimes', 'degruchy_mime_types', 1, 99 );
  * @return bool TRUE Always returns true
  */
 function degruchy_css_tweaks() {
-	if( !file_exists( __DIR__ . "/styles/tweaks.css" ) ) {
+	if ( ! file_exists( __DIR__ . "/styles/tweaks.css" ) ) {
 		// Abort if we don't find a tweaks CSS file
 		return FALSE;
 	}
 
 	wp_enqueue_style(
-			'degruchy-core-tweaks',
-			plugins_url( "/styles/tweaks.css", __FILE__ ),
-			array(),
-			NULL,
-			"all"
+		'degruchy-core-tweaks',
+		plugins_url( "/styles/tweaks.css", __FILE__ ),
+		array(),
+		NULL,
+		"all"
 	);
 
 	return TRUE;
 }
+
 add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 99 );
