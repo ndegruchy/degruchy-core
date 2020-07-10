@@ -68,6 +68,10 @@ function degruchy_csp() {
 			"report-uri"  => "https://degruchy.report-uri.com/r/d/csp/enforce",
 		);
 
+		if ( empty( array_filter( $csp_options ) ) ) {
+			return FALSE;
+		}
+
 		$csp_string = "Content-Security-Policy: "; // Empty by default
 
 		foreach ( $csp_options as $rule => $setting ) {
@@ -134,26 +138,15 @@ add_action( 'admin_menu', 'degruchy_custom_fields_metabox' );
  * @return string $content The maybe modified content
  */
 function degruchy_maybe_add_banner( $content ) {
-	if ( ! is_singular( 'post' ) ) {
+	if ( ! is_singular( 'post' ) || in_category( "garrett-quotes" ) ) {
 		return $content;
 	}
 
 	$postd = get_the_date( 'U' );
 	$today = date( 'U' );
 	$oneyr = 60 * 60 * 24 * 365;
-	$cats  = get_categories();
-	$show  = 0;
 
-	foreach ( $cats as $category ) { // Loop through the assigned categories
-		if ( $category == 'garrett-quotes' ) { // If we are a garrett quote
-			$show = 0; // hide the bar
-			break;
-		} else {
-			$show = 1;
-		}
-	}
-
-	if ( ( ( $today - $postd ) >= $oneyr ) && $show == 1 ) { // If we're a year or more old
+	if ( ( ( $today - $postd ) >= $oneyr ) ) { // If we're a year or more old
 
 		$_banner_cache = wp_cache_get(
 			"degruchy-core-old-banner",
