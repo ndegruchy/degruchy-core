@@ -51,6 +51,10 @@ label {
 	margin-bottom: 1.5em;
 }
 
+#webmention-form label {
+	line-height: 170%; /* Match the default paragraph line-height */
+}
+
 #webmention-form input {
 	background: #FAFAFA;
 	border: 1px solid #EEE;
