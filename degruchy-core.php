@@ -256,4 +256,5 @@ function degruchy_core_sc_blogroll() {
 }
 
 add_shortcode( "blogroll", "degruchy_core_sc_blogroll" );
+add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 99 );
