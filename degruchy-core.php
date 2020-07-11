@@ -239,6 +239,11 @@ function degruchy_css_tweaks() {
 	return TRUE;
 }
 
+/**
+ * Blogroll Shortcode
+ *
+ * @return string $blogroll A formatted blogroll, suitable for a shortcode
+ */
 function degruchy_core_sc_blogroll() {
 	$blogroll = wp_list_bookmarks(
 		array(
