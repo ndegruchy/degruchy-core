@@ -1,3 +1,8 @@
+.format-quote ::selection {
+	background-color: #ccc;
+	color:            #000;
+}
+
 label {
 	line-height: 170%;
 }
@@ -15,23 +20,23 @@ label {
 
 .wp-block-image figcaption,
 .wp-block-video figcaption {
-	font-size: small;
+	font-size:  small;
 	text-align: center;
 }
 
 #old {
 	background-color: #226997;
-	border-radius: 5px;
-	box-shadow: 0 4px 6px #aaa;
-	color: #fff;
-	font-size: smaller;
-	font-style: italic;
-	margin-bottom: 2.5em;
-	padding: 1em;
+	border-radius:    5px;
+	box-shadow:       0 4px 6px #aaa;
+	color:            #fff;
+	font-size:        smaller;
+	font-style:       italic;
+	margin-bottom:    2.5em;
+	padding:          1em;
 }
 
 #old a {
-	color: #fff;
+	color:           #fff;
 	text-decoration: underline;
 }
 
@@ -40,10 +45,10 @@ label {
 }
 
 #webmention-form:before {
-	content: "Respond on Your Own Site?";
-	display: block;
-	font-size: x-large;
-	font-weight: bold;
+	content:        "Respond on Your Own Site?";
+	display:        block;
+	font-size:      x-large;
+	font-weight:    bold;
 	padding-bottom: 1em;
 }
 
@@ -56,40 +61,40 @@ label {
 }
 
 #webmention-form input {
-	background: #FAFAFA;
-	border: 1px solid #EEE;
-	padding: 1em;
-	width: 100%;
+	background: #fafafa;
+	border:     1px solid #eee;
+	padding:    1em;
+	width:      100%;
 }
 
 #webmention-form input:focus {
-	background-color: #EEE;
-	color: #444;
-	outline: none;
+	background-color: #eee;
+	color:            #444;
+	outline:          none;
 }
 
 :is( .mentions, .likes, .replies, .bookmarks, .reposts ) h3,
 :-moz-any( .mentions, .likes, .replies, .bookmarks, .reposts ) h3,
 :-webkit-any( .mentions, .likes, .replies, .bookmarks, .reposts ) h3,
 :matches( .mentions, .likes, .replies, .bookmarks, .reposts ) h3 {
-	font-size: x-large;
-	font-weight: bold;
+	font-size:     x-large;
+	font-weight:   bold;
 	margin-bottom: 1em;
 }
 
 #webmention-form input[type="submit"] {
-	background: #272F38;
+	background:    #272f38;
 	border-radius: 4px;
-	border: none;
-	color: #FFF;
-	display: inline-block;
-	font-family: 'Lato', sans-serif;
-	font-size: 0.925rem;
-	line-height: 1;
+	border:        none;
+	color:         #fff;
+	display:       inline-block;
+	font-family:   "Lato", sans-serif;
+	font-size:     0.925rem;
+	line-height:   1;
 	margin-bottom: 0;
-	max-width: none;
-	padding: 16px;
-	width: auto;
+	max-width:     none;
+	padding:       16px;
+	width:         auto;
 }
 
 .mentions,
@@ -112,6 +117,6 @@ label {
 :-moz-any( .mentions, .likes, .replies, .bookmarks, .reposts ) .u-url:before,
 :-webkit-any( .mentions, .likes, .replies, .bookmarks, .reposts ) .u-url:before,
 :matches( .mentions, .likes, .replies, .bookmarks, .reposts ) .u-url:before {
-	content: "🔗 view post";
+	content:     "🔗 view post";
 	margin-left: 1em;
 }
