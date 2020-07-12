@@ -29,12 +29,6 @@
  * @return bool TRUE This always fires
  */
 function degruchy_csp() {
-	$toggle = TRUE; // Set me to false to turn this feature off
-
-	if ( ! $toggle ) {
-		return FALSE;
-	}
-
 	$_csp_cache = wp_cache_get( "degruchy-core-csp", "degruchy-core" );
 
 	if ( FALSE == $_csp_cache ) { // CSP Cache is empty, generate it again
@@ -239,6 +233,8 @@ function degruchy_css_tweaks() {
 	return TRUE;
 }
 
+add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 99 );
+
 /**
  * Blogroll Shortcode
  *
@@ -262,4 +258,3 @@ function degruchy_core_sc_blogroll() {
 
 add_shortcode( "blogroll", "degruchy_core_sc_blogroll" );
 add_filter( 'pre_option_link_manager_enabled', '__return_true' );
-add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 99 );
