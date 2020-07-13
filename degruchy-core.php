@@ -292,13 +292,22 @@ function degruchy_core_images() {
 			$meta = wp_get_attachment_metadata( $image->ID );
 			$url  = wp_get_attachment_thumb_url( $image->ID );
 
+			// Found: https://wordpress.org/support/topic/how-to-get-the-alt-text-of-an-image/
+			// Not going to lie, this is... weird, considering the above meta function should return this
+			// as part of the array, but whatever...
+			$alt  = get_post_meta( $image->ID, "_wp_attachment_image_alt", TRUE );
+
+			if( empty( $alt ) ) {
+				$alt = "No alternative text found for this resource.";
+			}
+
 			$height = $meta[ 'sizes' ][ 'thumbnail' ][ 'height' ];
 			$width  = $meta[ 'sizes' ][ 'thumbnail' ][ 'width' ];
 			$bigurl = $meta[ 'file' ];
 
 			$content .= "<figure class=\"gallery-img\">";
 			$content .= "<a href=\"/wp-content/uploads/{$bigurl}\">";
-			$content .= "<img src=\"{$url}\" height=\"{$height}\" width=\"{$width}\">";
+			$content .= "<img src=\"{$url}\" height=\"{$height}\" width=\"{$width}\" alt=\"{$alt}\">";
 			$content .= "</a>";
 			$content .= "</figure>";
 		}
