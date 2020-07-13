@@ -80,11 +80,11 @@ function degruchy_csp() {
 				// If we find the value is another array, loop in
 				$csp_string .= $rule; // First part
 				foreach ( $setting as $item ) {
-					$csp_string .= " " . $item; // Append setting
+					$csp_string .= " {$item}"; // Append setting
 				}
 			} else {
 				// If it's just a simple k=>v, then add it as per normal.
-				$csp_string .= $rule . " " . $setting;
+				$csp_string .= "{$rule} {$setting}";
 			}
 			$csp_string .= "; "; // separator
 		}
@@ -171,7 +171,7 @@ function degruchy_maybe_add_banner( $content ) {
 				}
 
 				$banner = $Parsedown->text( $banner );
-				$banner = "<section id=\"old\">" . $banner . "</section>";
+				$banner = "<section id=\"old\">{$banner}</section>";
 
 				// Cache the result for an hour
 				wp_cache_set(
@@ -297,8 +297,8 @@ function degruchy_core_images() {
 			$bigurl = $meta[ 'file' ];
 
 			$content .= "<figure class=\"gallery-img\">";
-			$content .= "<a href=\"/wp-content/uploads/" . $bigurl . "\">";
-			$content .= "<img src=\"" . $url . "\" height=\"" . $height . "\" width=\"" . $width . "\">";
+			$content .= "<a href=\"/wp-content/uploads/{$bigurl}\">";
+			$content .= "<img src=\"{$url}\" height=\"{$height}\" width=\"{$width}\">";
 			$content .= "</a>";
 			$content .= "</figure>";
 		}
