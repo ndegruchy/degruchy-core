@@ -288,11 +288,12 @@ function degruchy_core_images() {
 
 			$height = $meta[ 'sizes' ][ 'thumbnail' ][ 'height' ];
 			$width  = $meta[ 'sizes' ][ 'thumbnail' ][ 'width' ];
-			$alttxt = $meta[ 'image_meta' ][ 'title' ];
+			$bigurl = $meta[ 'file' ];
 
 			$content .= "<figure class=\"gallery-img\">";
-			$content .= "<img src=\"" . $url . "\" height=\"" . $height . "\" width=\"" . $width . "\" alt=\"" . $alttxt . "\">";
-			$content .= "<figcaption>" . $alttxt . "</figcaption>";
+			$content .= "<a href=\"/wp-content/uploads/" . $bigurl . "\">";
+			$content .= "<img src=\"" . $url . "\" height=\"" . $height . "\" width=\"" . $width . "\">";
+			$content .= "</a>";
 			$content .= "</figure>";
 		}
 

@@ -120,3 +120,8 @@ label {
 	content:     "🔗 view post";
 	margin-left: 1em;
 }
+
+#images {
+	display: grid;
+	grid-template-columns: repeat( 4, auto );
+}
