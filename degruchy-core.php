@@ -260,3 +260,55 @@ function degruchy_core_sc_blogroll() {
 
 add_shortcode( "blogroll", "degruchy_core_sc_blogroll" );
 add_filter( 'pre_option_link_manager_enabled', '__return_true' );
+
+/**
+ * Images Page Shortcode
+ */
+function degruchy_core_images() {
+	$_images_cache = wp_cache_get( "degruchy-images", "degruchy-core" );
+	$content       = "<section id=\"images\">";
+
+	if ( empty( $_images_cache ) ) {
+		$query_images_args = array(
+			'post_type'      => 'attachment',
+			'post_mime_type' => 'image',
+			'post_status'    => 'inherit',
+			'posts_per_page' => - 1,
+		);
+
+		$query_images = new WP_Query( $query_images_args );
+
+		foreach ( $query_images->posts as $image ) {
+			if ( empty( $image ) ) {
+				break;
+			}
+
+			$meta   = wp_get_attachment_metadata( $image->ID );
+			$url    = wp_get_attachment_thumb_url( $image->ID );
+
+			$height = $meta[ 'sizes' ][ 'thumbnail' ][ 'height' ];
+			$width  = $meta[ 'sizes' ][ 'thumbnail' ][ 'width' ];
+			$alttxt = $meta[ 'image_meta' ][ 'title' ];
+
+			$content .= "<figure class=\"gallery-img\">";
+			$content .= "<img src=\"" . $url . "\" height=\"" . $height . "\" width=\"" . $width . "\" alt=\"" . $alttxt . "\">";
+			$content .= "<figcaption>" . $alttxt . "</figcaption>";
+			$content .= "</figure>";
+		}
+
+		$content .= "</section>";
+
+		wp_cache_set(
+			"degruchy-images",
+			$content,
+			"degruchy-core",
+			3600000
+		);
+
+		return $content;
+
+	} else {
+		return $_images_cache;
+	}
+}
+add_shortcode( "degruchy-images", "degruchy_core_images" );
