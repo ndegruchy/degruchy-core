@@ -34,32 +34,38 @@ function degruchy_csp() {
 	if ( FALSE == $_csp_cache ) { // CSP Cache is empty, generate it again
 		// Settings matrix
 		$csp_options = array(
-			"default-src" => array(
+			"default-src"  => array(
 				"'self'",
 				"https://www.degruchy.org",
 			),
-			"base-uri"    => array(
+			"base-uri"     => array(
 				"'self'",
 				"https://www.degruchy.org",
 			),
-			"script-src"  => array(
+			"script-src"   => array(
 				"'self'",
 				"'unsafe-inline'",
 			),
-			"style-src"   => array(
+			"style-src"    => array(
 				"'self'",
 				"'unsafe-inline'",
 			),
-			"font-src"    => array(
+			"font-src"     => array(
 				"'self'",
 				"data:",
 			),
-			"img-src"     => array(
+			"img-src"      => array(
 				"'self'",
 				"data:",
 				"https://cdn.shortpixel.ai",
 			),
-			"report-uri"  => "https://degruchy.report-uri.com/r/d/csp/enforce",
+			"prefetch-src" => array(
+				"'self'",
+				"https://www.degruchy.org",
+				"https://cdn.shortpixel.ai",
+			),
+			"report-uri"   => "https://degruchy.report-uri.com/r/d/csp/enforce",
+			"report-to"    => "https://degruchy.report-uri.com/r/d/csp/enforce", //CSP level 3 https://www.w3.org/TR/CSP/#changes-from-level-2
 		);
 
 		if ( empty( array_filter( $csp_options ) ) ) {
@@ -283,8 +289,8 @@ function degruchy_core_images() {
 				break;
 			}
 
-			$meta   = wp_get_attachment_metadata( $image->ID );
-			$url    = wp_get_attachment_thumb_url( $image->ID );
+			$meta = wp_get_attachment_metadata( $image->ID );
+			$url  = wp_get_attachment_thumb_url( $image->ID );
 
 			$height = $meta[ 'sizes' ][ 'thumbnail' ][ 'height' ];
 			$width  = $meta[ 'sizes' ][ 'thumbnail' ][ 'width' ];
@@ -312,4 +318,5 @@ function degruchy_core_images() {
 		return $_images_cache;
 	}
 }
+
 add_shortcode( "degruchy-images", "degruchy_core_images" );
