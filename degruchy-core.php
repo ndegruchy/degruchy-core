@@ -22,6 +22,10 @@
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+define(
+	'CACHELIFETIME',
+	3600000
+);
 
 /**
  * Add CSPs to header
@@ -35,34 +39,34 @@ function degruchy_csp() {
 		// Settings matrix
 		$csp_options = array(
 			"default-src"  => array(
-				"'self'",
-				"https://www.degruchy.org",
+				'\'self\'',
+				'https://www.degruchy.org',
 			),
 			"base-uri"     => array(
-				"'self'",
-				"https://www.degruchy.org",
+				'\'self\'',
+				'https://www.degruchy.org',
 			),
 			"script-src"   => array(
-				"'self'",
-				"'unsafe-inline'",
+				'\'self\'',
+				'\'unsafe-inline\'',
 			),
 			"style-src"    => array(
-				"'self'",
-				"'unsafe-inline'",
+				'\'self\'',
+				'\'unsafe-inline\'',
 			),
 			"font-src"     => array(
-				"'self'",
-				"data:",
+				'\'self\'',
+				'data:',
 			),
 			"img-src"      => array(
-				"'self'",
-				"data:",
-				"https://cdn.shortpixel.ai",
+				'\'self\'',
+				'data:',
+				'https://cdn.shortpixel.ai',
 			),
 			"prefetch-src" => array(
-				"'self'",
-				"https://www.degruchy.org",
-				"https://cdn.shortpixel.ai",
+				'\'self\'',
+				'https://www.degruchy.org',
+				'https://cdn.shortpixel.ai',
 			),
 			"report-uri"   => "https://degruchy.report-uri.com/r/d/csp/enforce",
 			"report-to"    => "https://degruchy.report-uri.com/r/d/csp/enforce", //CSP level 3 https://www.w3.org/TR/CSP/#changes-from-level-2
@@ -89,7 +93,7 @@ function degruchy_csp() {
 			$csp_string .= "; "; // separator
 		}
 
-		$csp_string .= "upgrade-insecure-requests; block-all-mixed-content;"; // non-value rules
+		$csp_string .= 'upgrade-insecure-requests; block-all-mixed-content;'; // non-value rules
 		$csp_string = trim( $csp_string );
 
 		// Caching
@@ -97,7 +101,7 @@ function degruchy_csp() {
 			"degruchy-core-csp",
 			$csp_string,
 			"degruchy-core",
-			3600000
+			CACHELIFETIME
 		);
 
 		header( $csp_string );
@@ -178,7 +182,7 @@ function degruchy_maybe_add_banner( $content ) {
 					"degruchy-core-old-banner",
 					$banner,
 					"degruchy-core",
-					3600000
+					CACHELIFETIME
 				);
 			} else {
 				$banner = ''; // parsedown is missing! abort!
@@ -261,7 +265,7 @@ function degruchy_core_sc_blogroll() {
 		)
 	);
 
-	return "<ul>" . $blogroll . "</ul>";
+	return "<ul>{$blogroll}</ul>";
 }
 
 add_shortcode( "blogroll", "degruchy_core_sc_blogroll" );
@@ -272,7 +276,7 @@ add_filter( 'pre_option_link_manager_enabled', '__return_true' );
  */
 function degruchy_core_images() {
 	$_images_cache = wp_cache_get( "degruchy-images", "degruchy-core" );
-	$content       = "<section id=\"images\">";
+	$content       = '<section id="images">';
 
 	if ( empty( $_images_cache ) ) {
 		$query_images_args = array(
@@ -305,20 +309,20 @@ function degruchy_core_images() {
 			$width  = $meta[ 'sizes' ][ 'thumbnail' ][ 'width' ];
 			$bigurl = $meta[ 'file' ];
 
-			$content .= "<figure class=\"gallery-img\">";
+			$content .= '<figure class="gallery-img">';
 			$content .= "<a href=\"/wp-content/uploads/{$bigurl}\">";
 			$content .= "<img src=\"{$url}\" height=\"{$height}\" width=\"{$width}\" alt=\"{$alt}\">";
-			$content .= "</a>";
-			$content .= "</figure>";
+			$content .= '</a>';
+			$content .= '</figure>';
 		}
 
-		$content .= "</section>";
+		$content .= '</section>';
 
 		wp_cache_set(
 			"degruchy-images",
 			$content,
 			"degruchy-core",
-			3600000
+			CACHELIFETIME
 		);
 
 		return $content;
