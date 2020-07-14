@@ -33,7 +33,7 @@ define(
  * @return bool TRUE This always fires
  */
 function degruchy_csp() {
-	$_csp_cache = wp_cache_get( "degruchy-core-csp", "degruchy-core" );
+	$_csp_cache = wp_cache_get( 'degruchy-core-csp', 'degruchy-core' );
 
 	if ( FALSE == $_csp_cache ) { // CSP Cache is empty, generate it again
 		// Settings matrix
@@ -77,7 +77,7 @@ function degruchy_csp() {
 			return FALSE;
 		}
 
-		$csp_string = "Content-Security-Policy: "; // Empty by default
+		$csp_string = 'Content-Security-Policy: '; // Empty by default
 
 		foreach ( $csp_options as $rule => $setting ) {
 			// For each item in the top-level array
@@ -99,9 +99,9 @@ function degruchy_csp() {
 
 		// Caching
 		wp_cache_set(
-			"degruchy-core-csp",
+			'degruchy-core-csp',
 			$csp_string,
-			"degruchy-core",
+			'degruchy-core',
 			CACHELIFETIME
 		);
 
@@ -143,7 +143,7 @@ add_action( 'admin_menu', 'degruchy_custom_fields_metabox' );
  * @return string $content The maybe modified content
  */
 function degruchy_maybe_add_banner( $content ) {
-	if ( ! is_singular( 'post' ) || in_category( "garrett-quotes" ) ) {
+	if ( ! is_singular( 'post' ) || in_category( 'garrett-quotes' ) ) {
 		return $content;
 	}
 
@@ -154,21 +154,21 @@ function degruchy_maybe_add_banner( $content ) {
 	if ( ( ( $today - $postd ) >= $oneyr ) ) { // If we're a year or more old
 
 		$_banner_cache = wp_cache_get(
-			"degruchy-core-old-banner",
-			"degruchy-core"
+			'degruchy-core-old-banner',
+			'degruchy-core'
 		);
 
 		if ( FALSE == $_banner_cache ) {
 			// If the banner cache is empty, generate it
 			// Add parsedown.
-			if ( file_exists( __DIR__ . "/vendor/parsedown/Parsedown.php" ) ) {
-				require_once __DIR__ . "/vendor/parsedown/Parsedown.php";
+			if ( file_exists( __DIR__ . '/vendor/parsedown/Parsedown.php' ) ) {
+				require_once __DIR__ . '/vendor/parsedown/Parsedown.php';
 				$Parsedown = new Parsedown;
 
 				// Set some options
 				$Parsedown->setSafeMode( TRUE );
 
-				$banner_file = __DIR__ . "/templates/banner.md";
+				$banner_file = __DIR__ . '/templates/banner.md';
 				if ( file_exists( $banner_file ) ) {
 					$banner = file_get_contents( $banner_file );
 				} else {
@@ -180,9 +180,9 @@ function degruchy_maybe_add_banner( $content ) {
 
 				// Cache the result for an hour
 				wp_cache_set(
-					"degruchy-core-old-banner",
+					'degruchy-core-old-banner',
 					$banner,
-					"degruchy-core",
+					'degruchy-core',
 					CACHELIFETIME
 				);
 			} else {
@@ -228,17 +228,17 @@ add_filter( 'upload_mimes', 'degruchy_mime_types', 1, 99 );
  * @return bool TRUE Always returns true
  */
 function degruchy_css_tweaks() {
-	if ( ! file_exists( __DIR__ . "/styles/tweaks.css" ) ) {
+	if ( ! file_exists( __DIR__ . '/styles/tweaks.css' ) ) {
 		// Abort if we don't find a tweaks CSS file
 		return FALSE;
 	}
 
 	wp_enqueue_style(
 		'degruchy-core-tweaks',
-		plugins_url( "/styles/tweaks.css", __FILE__ ),
+		plugins_url( '/styles/tweaks.css', __FILE__ ),
 		array(),
 		NULL,
-		"all"
+		'all'
 	);
 
 	return TRUE;
@@ -256,27 +256,27 @@ add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 99 );
 function degruchy_core_sc_blogroll() {
 	$blogroll = wp_list_bookmarks(
 		array(
-			"orderby"      => "name",
-			"echo"         => FALSE,
-			"title_li"     => "",
-			"title_before" => "",
-			"title_after"  => "",
-			"show_images"  => "",
-			"categorize"   => 0,
+			'orderby'      => 'name',
+			'echo'         => FALSE,
+			'title_li'     => "",
+			'title_before' => "",
+			'title_after'  => "",
+			'show_images'  => "",
+			'categorize'   => 0,
 		)
 	);
 
 	return "<ul>{$blogroll}</ul>";
 }
 
-add_shortcode( "blogroll", "degruchy_core_sc_blogroll" );
+add_shortcode( 'blogroll', 'degruchy_core_sc_blogroll' );
 add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 
 /**
  * Images Page Shortcode
  */
 function degruchy_core_images() {
-	$_images_cache = wp_cache_get( "degruchy-images", "degruchy-core" );
+	$_images_cache = wp_cache_get( 'degruchy-images', 'degruchy-core' );
 	$content       = '<section id="images">';
 
 	if ( empty( $_images_cache ) ) {
@@ -300,10 +300,10 @@ function degruchy_core_images() {
 			// Found: https://wordpress.org/support/topic/how-to-get-the-alt-text-of-an-image/
 			// Not going to lie, this is... weird, considering the above meta function should return this
 			// as part of the array, but whatever...
-			$alt = esc_html( get_post_meta( $image->ID, "_wp_attachment_image_alt", TRUE ) );
+			$alt = esc_html( get_post_meta( $image->ID, '_wp_attachment_image_alt', TRUE ) );
 
 			if ( empty( $alt ) ) {
-				$alt = "No alternative text found for this resource.";
+				$alt = 'No alternative text found for this resource.';
 			}
 
 			$height = $meta[ 'sizes' ][ 'thumbnail' ][ 'height' ];
@@ -320,9 +320,9 @@ function degruchy_core_images() {
 		$content .= '</section>';
 
 		wp_cache_set(
-			"degruchy-images",
+			'degruchy-images',
 			$content,
-			"degruchy-core",
+			'degruchy-core',
 			CACHELIFETIME
 		);
 
@@ -333,4 +333,4 @@ function degruchy_core_images() {
 	}
 }
 
-add_shortcode( "degruchy-images", "degruchy_core_images" );
+add_shortcode( 'degruchy-images', 'degruchy_core_images' );
