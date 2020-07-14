@@ -1,4 +1,4 @@
-**Please Note:** This post is a year or more old. Consequently, content [may have changed, gone out of date, broke, or is now just plain wrong][1]. If you have any questions, concerns or issues with this content, please feel free to [send me an email][2], including the link, and what issue you're experiencing.
+**Please Note:** This post is a year or more old. Consequently, content [may have changed, gone out of date, broke, opinions have changed or is now just plain wrong][1]. If you have any questions, concerns or issues with this content, please feel free to [send me an email][2], including the link, and what issue you're experiencing.
 
 Thank you.
 
