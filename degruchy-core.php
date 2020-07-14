@@ -69,7 +69,8 @@ function degruchy_csp() {
 				'https://cdn.shortpixel.ai',
 			),
 			"report-uri"   => "https://degruchy.report-uri.com/r/d/csp/enforce",
-			"report-to"    => "https://degruchy.report-uri.com/r/d/csp/enforce", //CSP level 3 https://www.w3.org/TR/CSP/#changes-from-level-2
+			"report-to"    => "https://degruchy.report-uri.com/r/d/csp/enforce",
+			//CSP level 3 https://www.w3.org/TR/CSP/#changes-from-level-2
 		);
 
 		if ( empty( array_filter( $csp_options ) ) ) {
@@ -299,9 +300,9 @@ function degruchy_core_images() {
 			// Found: https://wordpress.org/support/topic/how-to-get-the-alt-text-of-an-image/
 			// Not going to lie, this is... weird, considering the above meta function should return this
 			// as part of the array, but whatever...
-			$alt  = get_post_meta( $image->ID, "_wp_attachment_image_alt", TRUE );
+			$alt = esc_html( get_post_meta( $image->ID, "_wp_attachment_image_alt", TRUE ) );
 
-			if( empty( $alt ) ) {
+			if ( empty( $alt ) ) {
 				$alt = "No alternative text found for this resource.";
 			}
 

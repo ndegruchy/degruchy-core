@@ -123,11 +123,27 @@ label {
 
 #images {
 	display:               grid;
-	grid-template-columns: repeat( 4, auto );
+	grid-template-columns: repeat( 1, 1fr );
 }
 
-@media screen and (min-width: 800px) {
+.gallery-img {
+	margin: 0 auto;
+}
+
+@media screen and (max-width: 599px) {
 	#images {
-		grid-template-columns: repeat( 2, auto );
+		grid-template-columns: repeat( 2, 1fr );
+	}
+}
+
+@media screen and (min-width: 600px) {
+	#images {
+		grid-template-columns: repeat( 3, 1fr );
+	}
+}
+
+@media screen and (min-width: 900px) {
+	#images {
+		grid-template-columns: repeat( 4, 1fr );
 	}
 }
