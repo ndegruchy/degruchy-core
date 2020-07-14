@@ -263,10 +263,10 @@ function degruchy_core_sc_blogroll() {
 		array(
 			'orderby'      => 'name',
 			'echo'         => FALSE,
-			'title_li'     => "",
-			'title_before' => "",
-			'title_after'  => "",
-			'show_images'  => "",
+			'title_li'     => '',
+			'title_before' => '',
+			'title_after'  => '',
+			'show_images'  => '',
 			'categorize'   => 0,
 		)
 	);
