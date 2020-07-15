@@ -147,3 +147,16 @@ label {
 		grid-template-columns: repeat( 4, 1fr );
 	}
 }
+
+.footer h1.p-name {
+	font-size: x-large;
+	margin-bottom: 1em;
+}
+
+.footer h1.p-name a {
+	color: #fff;
+}
+
+.footer h1.p-name a:hover {
+	color: #fff;
+}
