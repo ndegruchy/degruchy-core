@@ -344,6 +344,6 @@ function degruchy_core_images() {
 add_shortcode( 'degruchy-images', 'degruchy_core_images' );
 
 function my_social_networks() {
-	return 'pocket|wallabag|reddit|email';
+	return array( 'pocket', 'wallabag', 'reddit', 'email' );
 }
 add_filter( 'wp_toolbelt_social_networks', 'my_social_networks');
