@@ -256,8 +256,6 @@ function degruchy_css_tweaks() {
 
 add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 99 );
 
-add_action( 'wp_enqueue_scripts', 'degruchy_css_tweaks', 99 );
-
 /**
  * Blogroll Shortcode
  *
