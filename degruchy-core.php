@@ -27,10 +27,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define(
-	'CACHELIFETIME',
-	3600000
-);
+define( 'CACHELIFETIME', 3600000 );
+define(	'DEGRUCHY_CORE_VERSION', '1.3.2' );
+
+/**
+ * Disable plugin/theme editor
+ */
+if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
+	define( 'DISALLOW_FILE_EDIT', true );
+}
 
 /**
  * Add CSPs to header
