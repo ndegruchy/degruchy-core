@@ -118,13 +118,36 @@ label {
 	content: ": "
 }
 
-.bookmarks .u-url:before,
-.likes .u-url:before,
-.mentions .u-url:before,
-.read .u-url:before,
-.replies .u-url:before,
-.reposts .u-url:before {
+.bookmarks .p-author + .u-url:before {
+	content: "🔖🔖🔖🔖 view post";
+}
+
+.likes .p-author + .u-url:before {
+	content: "💟 view post";
+}
+
+.mentions .p-author + .u-url:before {
+	content: "💬 view post";
+}
+
+.read .p-author + .u-url:before {
+	content: "👁 view post"
+}
+
+.replies .p-author + .u-url:before {
+	content: "🔁 view post";
+}
+
+.reposts .p-author + .u-url:before {
 	content:     "🔗 view post";
+}
+
+.bookmarks .p-author + .u-url:before,
+.likes .p-author + .u-url:before,
+.mentions .p-author + .u-url:before,
+.read .p-author + .u-url:before,
+.replies .p-author + .u-url:before,
+.reposts .p-author + .u-url:before {
 	margin-left: 1em;
 }
 
