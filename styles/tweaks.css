@@ -24,6 +24,10 @@ label {
 	text-align: center;
 }
 
+.comment-meta-content, .comment-content .post-content {
+	margin-left: 0;
+}
+
 #old {
 	background-color: #226997;
 	border-radius:    5px;
