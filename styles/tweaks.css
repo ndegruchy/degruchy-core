@@ -73,10 +73,12 @@ label {
 	outline:          none;
 }
 
-:is( .mentions, .likes, .replies, .bookmarks, .reposts ) h3,
-:-moz-any( .mentions, .likes, .replies, .bookmarks, .reposts ) h3,
-:-webkit-any( .mentions, .likes, .replies, .bookmarks, .reposts ) h3,
-:matches( .mentions, .likes, .replies, .bookmarks, .reposts ) h3 {
+.bookmarks h3,
+.likes h3,
+.mentions h3,
+.read h3,
+.replies h3,
+.reposts h3 {
 	font-size:     x-large;
 	font-weight:   bold;
 	margin-bottom: 1em;
@@ -97,26 +99,31 @@ label {
 	width:         auto;
 }
 
-.mentions,
-.likes,
-.replies,
 .bookmarks,
+.likes,
+.mentions,
+.read,
+.replies,
 .reposts {
 	padding: 0 8% 8%;
 }
 
 
-:is( .mentions, .likes, .replies, .bookmarks, .reposts ) .h-card:after,
-:-moz-any( .mentions, .likes, .replies, .bookmarks, .reposts ) .h-card:after,
-:-webkit-any( .mentions, .likes, .replies, .bookmarks, .reposts ) .h-card:after,
-:matches( .mentions, .likes, .replies, .bookmarks, .reposts ) .h-card:after {
+.bookmarks .h-card:after,
+.likes .h-card:after,
+.mentions .h-card:after,
+.read .h-card:after,
+.replies .h-card:after,
+.reposts .h-card:after {
 	content: ": "
 }
 
-:is( .mentions, .likes, .replies, .bookmarks, .reposts ) .u-url:before,
-:-moz-any( .mentions, .likes, .replies, .bookmarks, .reposts ) .u-url:before,
-:-webkit-any( .mentions, .likes, .replies, .bookmarks, .reposts ) .u-url:before,
-:matches( .mentions, .likes, .replies, .bookmarks, .reposts ) .u-url:before {
+.bookmarks .u-url:before,
+.likes .u-url:before,
+.mentions .u-url:before,
+.read .u-url:before,
+.replies .u-url:before,
+.reposts .u-url:before {
 	content:     "🔗 view post";
 	margin-left: 1em;
 }
