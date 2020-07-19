@@ -76,7 +76,7 @@ label {
 .bookmarks h3,
 .likes h3,
 .mentions h3,
-.read h3,
+.reads h3,
 .replies h3,
 .reposts h3 {
 	font-size:     x-large;
@@ -102,7 +102,7 @@ label {
 .bookmarks,
 .likes,
 .mentions,
-.read,
+.reads,
 .replies,
 .reposts {
 	padding: 0 8% 8%;
@@ -112,7 +112,7 @@ label {
 .bookmarks .h-card:after,
 .likes .h-card:after,
 .mentions .h-card:after,
-.read .h-card:after,
+.reads .h-card:after,
 .replies .h-card:after,
 .reposts .h-card:after {
 	content: ": "
@@ -130,7 +130,7 @@ label {
 	content: "💬 view post";
 }
 
-.read .p-author + .u-url:before {
+.reads .p-author + .u-url:before {
 	content: "👁 view post"
 }
 
@@ -145,7 +145,7 @@ label {
 .bookmarks .p-author + .u-url:before,
 .likes .p-author + .u-url:before,
 .mentions .p-author + .u-url:before,
-.read .p-author + .u-url:before,
+.reads .p-author + .u-url:before,
 .replies .p-author + .u-url:before,
 .reposts .p-author + .u-url:before {
 	margin-left: 1em;
