@@ -244,18 +244,36 @@ add_filter( 'upload_mimes', 'degruchy_mime_types', 1, 99 );
  */
 function degruchy_css_tweaks() {
 	$_css_files = array(
-		10 => '/styles/old-banner.css',
-		99 => '/styles/tweaks.css',
+		10 => array(
+			'name' => 'old-banner',
+			'file' => '/styles/old-banner.css',
+		),
+		20 => array(
+			'name' => 'pictures',
+			'file' => '/styles/pictures.css',
+		),
+		99 => array(
+			'name' => 'tweaks',
+			'file' => '/styles/tweaks.css',
+		),
 	);
 
 	// sort the array on key
 	ksort( $_css_files );
 
-	foreach ( $_css_files as $css_file ) {
-		if ( ! file_exists( __DIR__ . $css_file ) ) {
+	foreach ( $_css_files as $order => $data ) {
+		if ( ! file_exists( __DIR__ . $data[ 'file' ] ) ) {
 			// Abort if we don't find a tweaks CSS file
 			break;
 		}
+
+		wp_register_style(
+			"degruchy-core-css-{$data['name']}",
+			plugins_url( $data[ 'file' ], __FILE__ ),
+			array(),
+			NULL,
+			'screen'
+		);
 
 		wp_enqueue_style(
 			"degruchy-core-css-{$data['name']}",
