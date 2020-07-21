@@ -28,13 +28,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'CACHELIFETIME', 3600000 );
-define(	'DEGRUCHY_CORE_VERSION', '1.3.2' );
+define( 'DEGRUCHY_CORE_VERSION', '1.3.2' );
 
 /**
  * Disable plugin/theme editor
  */
 if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
-	define( 'DISALLOW_FILE_EDIT', true );
+	define( 'DISALLOW_FILE_EDIT', TRUE );
 }
 
 /**
@@ -73,8 +73,8 @@ function degruchy_csp() {
 //				'data:',
 //				'https://cdn.shortpixel.ai',
 //			),
-			"img-src" => array(
-				'https:'
+			"img-src"      => array(
+				'https:',
 			),
 			"prefetch-src" => array(
 				'\'self\'',
@@ -242,14 +242,15 @@ add_filter( 'upload_mimes', 'degruchy_mime_types', 1, 99 );
  */
 function degruchy_css_tweaks() {
 	$_css_files = array(
-		'/styles/old-banner.css',
-		'/styles/tweaks.css'
+		10 => '/styles/old-banner.css',
+		99 => '/styles/tweaks.css',
 	);
+	$_css_files = sort( $_css_files );
 
-	foreach( $_css_files as $css_file ) {
+	foreach ( $_css_files as $css_file ) {
 		if ( ! file_exists( __DIR__ . $css_file ) ) {
 			// Abort if we don't find a tweaks CSS file
-			return FALSE;
+			break;
 		}
 
 		wp_enqueue_style(
@@ -356,4 +357,5 @@ add_shortcode( 'degruchy-images', 'degruchy_core_images' );
 function my_social_networks() {
 	return array( 'pocket', 'wallabag', 'reddit', 'email' );
 }
-add_filter( 'wp_toolbelt_social_networks', 'my_social_networks');
+
+add_filter( 'wp_toolbelt_social_networks', 'my_social_networks' );
