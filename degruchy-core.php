@@ -381,3 +381,61 @@ function my_social_networks() {
 }
 
 add_filter( 'wp_toolbelt_social_networks', 'my_social_networks' );
+
+// Remove wlwmanifest.xml (needed to support windows live writer).
+remove_action( 'wp_head', 'wlwmanifest_link' );
+
+// Remove generator tag from RSS feeds.
+remove_action( 'atom_head', 'the_generator' );
+remove_action( 'comments_atom_head', 'the_generator' );
+remove_action( 'rss_head', 'the_generator' );
+remove_action( 'rss2_head', 'the_generator' );
+remove_action( 'commentsrss2_head', 'the_generator' );
+remove_action( 'rdf_header', 'the_generator' );
+remove_action( 'opml_head', 'the_generator' );
+remove_action( 'app_head', 'the_generator' );
+add_filter( 'the_generator', '__return_false' );
+
+// Remove WordPress generator version.
+remove_action( 'wp_head', 'wp_generator' );
+
+// Remove emoji styles and script from header.
+if ( is_admin() ) {
+
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+
+	add_filter(
+		'tiny_mce_plugins',
+		function( $plugins ) {
+			if ( is_array( $plugins ) ) {
+				return array_diff( $plugins, array( 'wpemoji' ) );
+			}
+			return array();
+		}
+	);
+
+} else {
+
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+	add_filter( 'emoji_svg_url', '__return_false' );
+
+}
+
+// Remove jQuery Migrate.
+add_action(
+	'wp_default_scripts',
+	function( $scripts ) {
+
+		if ( ! is_admin() && ! empty( $scripts->registered['jquery'] ) ) {
+			$jquery_dependencies = $scripts->registered['jquery']->deps;
+			$scripts->registered['jquery']->deps = array_diff( $jquery_dependencies, array( 'jquery-migrate' ) );
+		}
+
+	}
+);
