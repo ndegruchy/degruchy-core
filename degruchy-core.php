@@ -48,23 +48,23 @@ function degruchy_csp() {
 	if ( FALSE == $_csp_cache ) { // CSP Cache is empty, generate it again
 		// Settings matrix
 		$csp_options = array(
-			"default-src"  => array(
+			'default-src'  => array(
 				'\'self\'',
 				'https://www.degruchy.org',
 			),
-			"base-uri"     => array(
+			'base-uri'     => array(
 				'\'self\'',
 				'https://www.degruchy.org',
 			),
-			"script-src"   => array(
+			'script-src'   => array(
 				'\'self\'',
 				'\'unsafe-inline\'',
 			),
-			"style-src"    => array(
+			'style-src'    => array(
 				'\'self\'',
 				'\'unsafe-inline\'',
 			),
-			"font-src"     => array(
+			'font-src'     => array(
 				'\'self\'',
 				'data:',
 			),
@@ -73,16 +73,18 @@ function degruchy_csp() {
 //				'data:',
 //				'https://cdn.shortpixel.ai',
 //			),
-			"img-src"      => array(
+			'img-src'      => array(
+				'\'self\'',
+				'data:',
 				'https:',
 			),
-			"prefetch-src" => array(
+			'prefetch-src' => array(
 				'\'self\'',
 				'https://www.degruchy.org',
 				'https://cdn.shortpixel.ai',
 			),
-			"report-uri"   => "https://degruchy.report-uri.com/r/d/csp/enforce",
-			"report-to"    => "https://degruchy.report-uri.com/r/d/csp/enforce",
+			'report-uri'   => 'https://degruchy.report-uri.com/r/d/csp/enforce',
+			'report-to'    => 'https://degruchy.report-uri.com/r/d/csp/enforce',
 			//CSP level 3 https://www.w3.org/TR/CSP/#changes-from-level-2
 		);
 
@@ -256,11 +258,11 @@ function degruchy_css_tweaks() {
 		}
 
 		wp_enqueue_style(
-			'degruchy-core-tweaks',
-			plugins_url( $css_file, __FILE__ ),
+			"degruchy-core-css-{$data['name']}",
+			plugins_url( $data[ 'file' ], __FILE__ ),
 			array(),
 			NULL,
-			'all'
+			'screen'
 		);
 	}
 
