@@ -12,7 +12,7 @@
  * Plugin Name:       degruchy-core
  * Plugin URI:        https://git.sr.ht/~ndegruchy/degruchy-core
  * Description:       Core plugin for degruchy.org.
- * Version:           1.3.1
+ * Version:           1.3.3
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Nathan DeGruchy
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'CACHELIFETIME', 3600 );
-define( 'DEGRUCHY_CORE_VERSION', '1.3.2' );
+define( 'DEGRUCHY_CORE_VERSION', '1.3.3' );
 
 /**
  * Disable plugin/theme editor
