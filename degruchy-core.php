@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CACHELIFETIME', 3600000 );
+define( 'CACHELIFETIME', 3600 );
 define( 'DEGRUCHY_CORE_VERSION', '1.3.2' );
 
 /**
@@ -245,7 +245,9 @@ function degruchy_css_tweaks() {
 		10 => '/styles/old-banner.css',
 		99 => '/styles/tweaks.css',
 	);
-	$_css_files = sort( $_css_files );
+
+	// sort the array on key
+	ksort( $_css_files );
 
 	foreach ( $_css_files as $css_file ) {
 		if ( ! file_exists( __DIR__ . $css_file ) ) {
