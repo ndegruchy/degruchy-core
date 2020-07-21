@@ -408,10 +408,11 @@ if ( is_admin() ) {
 
 	add_filter(
 		'tiny_mce_plugins',
-		function( $plugins ) {
+		function ( $plugins ) {
 			if ( is_array( $plugins ) ) {
 				return array_diff( $plugins, array( 'wpemoji' ) );
 			}
+
 			return array();
 		}
 	);
@@ -430,11 +431,11 @@ if ( is_admin() ) {
 // Remove jQuery Migrate.
 add_action(
 	'wp_default_scripts',
-	function( $scripts ) {
+	function ( $scripts ) {
 
-		if ( ! is_admin() && ! empty( $scripts->registered['jquery'] ) ) {
-			$jquery_dependencies = $scripts->registered['jquery']->deps;
-			$scripts->registered['jquery']->deps = array_diff( $jquery_dependencies, array( 'jquery-migrate' ) );
+		if ( ! is_admin() && ! empty( $scripts->registered[ 'jquery' ] ) ) {
+			$jquery_dependencies                   = $scripts->registered[ 'jquery' ]->deps;
+			$scripts->registered[ 'jquery' ]->deps = array_diff( $jquery_dependencies, array( 'jquery-migrate' ) );
 		}
 
 	}
