@@ -68,10 +68,13 @@ function degruchy_csp() {
 				'\'self\'',
 				'data:',
 			),
-			"img-src"      => array(
-				'\'self\'',
-				'data:',
-				'https://cdn.shortpixel.ai',
+//			"img-src"      => array(
+//				'\'self\'',
+//				'data:',
+//				'https://cdn.shortpixel.ai',
+//			),
+			"img-src" => array(
+				'https:'
 			),
 			"prefetch-src" => array(
 				'\'self\'',
@@ -238,18 +241,25 @@ add_filter( 'upload_mimes', 'degruchy_mime_types', 1, 99 );
  * @return bool TRUE Always returns true
  */
 function degruchy_css_tweaks() {
-	if ( ! file_exists( __DIR__ . '/styles/tweaks.css' ) ) {
-		// Abort if we don't find a tweaks CSS file
-		return FALSE;
-	}
-
-	wp_enqueue_style(
-		'degruchy-core-tweaks',
-		plugins_url( '/styles/tweaks.css', __FILE__ ),
-		array(),
-		NULL,
-		'all'
+	$_css_files = array(
+		'/styles/old-banner.css',
+		'/styles/tweaks.css'
 	);
+
+	foreach( $_css_files as $css_file ) {
+		if ( ! file_exists( __DIR__ . $css_file ) ) {
+			// Abort if we don't find a tweaks CSS file
+			return FALSE;
+		}
+
+		wp_enqueue_style(
+			'degruchy-core-tweaks',
+			plugins_url( $css_file, __FILE__ ),
+			array(),
+			NULL,
+			'all'
+		);
+	}
 
 	return TRUE;
 }

@@ -1,0 +1,15 @@
+#old {
+	background-color: #226997;
+	border-radius:    5px;
+	box-shadow:       0 4px 6px #aaa;
+	color:            #fff;
+	font-size:        smaller;
+	font-style:       italic;
+	margin-bottom:    2.5em;
+	padding:          1em;
+}
+
+#old a {
+	color:           #fff;
+	text-decoration: underline;
+}
