@@ -51,6 +51,7 @@ function degruchy_csp() {
 			'default-src'  => array(
 				'\'self\'',
 				'https://www.degruchy.org',
+				'https://cdn.shortpixel.ai',
 			),
 			'base-uri'     => array(
 				'\'self\'',
@@ -59,6 +60,8 @@ function degruchy_csp() {
 			'script-src'   => array(
 				'\'self\'',
 				'\'unsafe-inline\'',
+				'https://cdn.shortpixel.ai',
+				'https://gc.zgo.at'
 			),
 			'style-src'    => array(
 				'\'self\'',
@@ -77,6 +80,7 @@ function degruchy_csp() {
 				'\'self\'',
 				'data:',
 				'https:',
+				'https://degruchy-org.goatcounter.com',
 			),
 			'prefetch-src' => array(
 				'\'self\'',
