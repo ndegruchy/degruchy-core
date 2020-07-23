@@ -381,6 +381,7 @@ function my_social_networks() {
 }
 
 add_filter( 'wp_toolbelt_social_networks', 'my_social_networks' );
+add_filter( 'toolbelt_social_networks', 'my_social_networks' ); // Dupe for when toolbelt removes wp prefix
 
 // Remove wlwmanifest.xml (needed to support windows live writer).
 remove_action( 'wp_head', 'wlwmanifest_link' );
