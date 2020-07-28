@@ -12,7 +12,7 @@
  * Plugin Name:       degruchy-core
  * Plugin URI:        https://git.sr.ht/~ndegruchy/degruchy-core
  * Description:       Core plugin for degruchy.org.
- * Version:           1.3.3
+ * Version:           1.3.4
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Nathan DeGruchy
@@ -20,6 +20,7 @@
  * Text Domain:       degruchy-core
  * License:           GPL Version 3 or Later
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
+ * GitHub Plugin URI: ndegruchy/degruchy-core
  */
 
 // Exit if accessed directly.
@@ -28,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'CACHELIFETIME', 3600 );
-define( 'DEGRUCHY_CORE_VERSION', '1.3.3' );
+define( 'DEGRUCHY_CORE_VERSION', '1.3.4' );
 
 /**
  * Disable plugin/theme editor
