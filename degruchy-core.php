@@ -9,10 +9,10 @@
  * @license           GPL Version 3 or later
  *
  * @wordpress-plugin
- * Plugin Name:       degruchy-core
+ * Plugin Name:       DeGruchy Core Plugin
  * Plugin URI:        https://git.sr.ht/~ndegruchy/degruchy-core
- * Description:       Core plugin for degruchy.org.
- * Version:           1.3.4
+ * Description:       Core functionality plugin for WordPress on DeGruchy.org.
+ * Version:           1.3.5
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Nathan DeGruchy
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'CACHELIFETIME', 3600 );
-define( 'DEGRUCHY_CORE_VERSION', '1.3.4' );
+define( 'DEGRUCHY_CORE_VERSION', '1.3.5' );
 
 /**
  * Disable plugin/theme editor
