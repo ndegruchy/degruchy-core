@@ -280,3 +280,11 @@ add_action(
 
 	}
 );
+
+function degruchy_social_sharing_filter() {
+    if("feed" === get_post_type())
+		return false;
+    // Show for all other posts.
+    return true;
+}
+add_filter( 'toolbelt_display_social_sharing', 'degruchy_social_sharing_filter' );
